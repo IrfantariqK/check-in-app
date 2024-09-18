@@ -21,7 +21,7 @@ interface CheckIn {
   imageUrl: string;
   date: string;
   owner: string;
-  ownerAvatarUrl?: string; // Make this optional
+  ownerAvatarUrl?: string; 
 }
 
 interface CheckInCardProps {

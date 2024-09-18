@@ -1,16 +1,15 @@
 "use client";
 
-
 import React, { useState, useEffect } from "react";
 import { Container, Typography, Grid, Box } from "@mui/material";
 import { collection, getDocs, addDoc } from "firebase/firestore";
-import { db } from "./lib/firebase"; // Ensure this import matches your exports
+import { db } from "./lib/firebase";
 import AddCheckInModal from "./components/AddChekin/AddCheckInModal";
 import ProjectDetailsModal from "./app/ProjectDetailsModal";
 import CheckInCard from "./components/AddChekin/CheckInCard";
 import BannerText from "./components/AddChekin/BannerText";
 import AddCheckInButton from "./components/AddChekin/AddCheckInButton";
-
+import Image from "next/image"; 
 interface CheckIn {
   id: string;
   title: string;
@@ -37,7 +36,7 @@ export default function Dashboard() {
       );
       setCheckIns(checkInsData);
     } catch (error) {
-      console.error("Error fetching check-ins:", error); // Improved error handling
+      console.error("Error fetching check-ins:", error);
     }
   };
 
@@ -47,7 +46,7 @@ export default function Dashboard() {
       await addDoc(collection(db, "checkIns"), newCheckIn);
       fetchCheckIns(); // Refetch data after adding
     } catch (error) {
-      console.error("Error adding check-in:", error); // Error handling
+      console.error("Error adding check-in:", error);
     }
     setIsAddModalOpen(false);
   };
@@ -59,14 +58,18 @@ export default function Dashboard() {
         sx={{
           position: "relative",
           height: "250px",
-          backgroundImage: 'url("/path/to/banner.jpg")', // Update with your banner image path
-          backgroundSize: "cover",
-          backgroundPosition: "center",
           borderRadius: "20px",
           color: "white",
           overflow: "hidden",
         }}
       >
+        <Image
+          src="/banner.png"
+          alt="Banner"
+          layout="fill"
+          objectFit="cover"
+          priority
+        />
         <Box
           sx={{
             position: "absolute",
@@ -95,9 +98,7 @@ export default function Dashboard() {
       <Grid container spacing={3} justifyContent="center" alignItems="stretch">
         {checkIns.map((checkIn) => (
           <Grid item xs={12} sm={6} md={4} key={checkIn.id}>
-            <CheckInCard
-              checkIn={checkIn}
-            />
+            <CheckInCard checkIn={checkIn} />
           </Grid>
         ))}
       </Grid>
